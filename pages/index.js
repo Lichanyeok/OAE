@@ -9,19 +9,19 @@ export default function Home() {
       <MenuContainer>
         <MenuItem>
           <Add />
-          업체 신규 등록
+          <Text>업체 신규 등록</Text>
         </MenuItem>
         <MenuItem>
           <Shop />
-          나의 업체 보기
+          <Text>나의 업체 보기 </Text>
         </MenuItem>
         <MenuItem>
           <MenuSvg />
-          주문관리하기
+          <Text>주문관리하기 </Text>
         </MenuItem>
         <MenuItem>
           <Interrogation />
-          문의하기
+          <Text>문의하기</Text>
         </MenuItem>
       </MenuContainer>
     </Container>
@@ -47,4 +47,13 @@ const MenuContainer = styled.div`
 const MenuItem = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-left: 1rem;
+`;
+
+const Text = styled.p`
+  padding: 0;
+  margin: 0;
+  font-family: NotoSansKR-Regular;
+  font-size: 0.6rem;
 `;

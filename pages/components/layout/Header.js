@@ -1,13 +1,18 @@
+import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import MenuSvg from "../assets/apps.svg";
 
 const Header = () => {
+  const router = useRouter();
+  const handleClick = (href) => {
+    router.push(href);
+  };
   return (
     <Container>
-      <Logo>LOGO</Logo>
+      <Logo onClick={() => handleClick("/")}>OE</Logo>
       <NavContainer>
-        <NavItem>로그인</NavItem>
+        <NavItem onClick={() => handleClick("./login")}>로그인</NavItem>
         <NavItem>
           <MenuSvg />
         </NavItem>

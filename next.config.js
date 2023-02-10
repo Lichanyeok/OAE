@@ -10,6 +10,7 @@ const nextConfig = {
     });
     return config;
   },
+  basePath: "https://localhost:3000",
 };
 
 module.exports = nextConfig;
