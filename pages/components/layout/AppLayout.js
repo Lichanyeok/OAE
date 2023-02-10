@@ -16,11 +16,11 @@ const AppLayout = (props) => {
 const Centering = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #fcf8e3;
+  background-color: #ededed;
 `;
 
 const FixedWidth = styled.div`
-  background-color: #fcf8e3;
+  background-color: #ededed;
   width: 500px;
   @media (max-width: 500px) {
     width: 100%;

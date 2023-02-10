@@ -1,35 +1,18 @@
-import { useRouter } from "next/router";
 import styled from "styled-components";
 
-const login = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
-
-  const handleClick = (href) => {
-    router.push(href);
-  };
+const Join = () => {
   return (
     <Container>
-      <Text>로그인</Text>
+      <Text>회원가입</Text>
       <Form>
         <Input type="email" placeholder="ex)user@google.com" />
         <Input type="password" placeholder="password" />
-        <Button>로그인</Button>
+        <Input type="password" placeholder="re-password" />
+        <Button>회원가입</Button>
       </Form>
-      <SocialContainer>
-        <SocialItem>Git</SocialItem>
-        <SocialItem>Google</SocialItem>
-        <SocialItem>Instagram</SocialItem>
-      </SocialContainer>
-      <UtillContainer>
-        <UtillItem onClick={() => handleClick("./join")}>신규가입</UtillItem>
-        <UtillItem>회원찾기</UtillItem>
-      </UtillContainer>
     </Container>
   );
 };
-
-export default login;
 
 const Container = styled.div`
   display: flex;
@@ -77,27 +60,5 @@ const Button = styled.button`
   font-family: NotoSansKR-Bold;
   color: white;
 `;
-const SocialContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 210px;
-`;
 
-const SocialItem = styled.div`
-  font-size: 0.3rem;
-  margin-top: 1rem;
-`;
-
-const UtillContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 1rem;
-  font-size: 0.5rem;
-`;
-
-const UtillItem = styled.div`
-  color: #808080;
-`;
+export default Join;
