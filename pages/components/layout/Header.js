@@ -27,6 +27,9 @@ const Container = styled.div`
   align-items: center;
   font-family: NotoSansKR-Regular;
   font-size: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const Logo = styled.div`
@@ -42,5 +45,6 @@ const NavContainer = styled.div`
 `;
 const NavItem = styled.div`
   padding-left: 1rem;
+  font-size: 0.8rem;
 `;
 export default Header;
