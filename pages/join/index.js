@@ -1,15 +1,60 @@
+import axios from "axios";
+import { use, useState } from "react";
 import styled from "styled-components";
 
 const Join = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
+  const [validation, setValidation] = useState(false);
+
+  const dataPost = async (ob) => {
+    console.log(ob);
+    try {
+      const res = await axios({
+        method: "POST",
+        url: `/member/v1.0/join`,
+        headers: { "Content-Type": "application/json" },
+        data: ob,
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    let ob = JSON.stringify({
+      email: email,
+      password: password,
+    });
+    dataPost(ob);
+  };
+
+  const emailHandler = (e) => {
+    setEmail(e.target.value);
+  };
+  const passwordHandler = (e) => {
+    setPassword(e.target.value);
+  };
   return (
     <Container>
       <Text>회원가입</Text>
-      <Form>
-        <Input type="email" placeholder="ex)user@google.com" />
-        <Input type="password" placeholder="password" />
+      <InputContainer>
+        <Input
+          type="email"
+          placeholder="ex)user@google.com"
+          onChange={emailHandler}
+        />
+        <Input
+          type="password"
+          placeholder="password"
+          onChange={passwordHandler}
+        />
         <Input type="password" placeholder="re-password" />
-        <Button>회원가입</Button>
-      </Form>
+        <Button onClick={clickHandler}>회원가입</Button>
+      </InputContainer>
     </Container>
   );
 };
@@ -29,7 +74,7 @@ const Text = styled.p`
   font-size: 3rem;
 `;
 
-const Form = styled.form`
+const InputContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
