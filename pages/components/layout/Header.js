@@ -2,8 +2,9 @@ import { useRouter } from "next/router";
 import React from "react";
 import styled from "styled-components";
 import MenuSvg from "../assets/apps.svg";
+import { Cookies, useCookies } from "react-cookie";
 
-const Header = () => {
+const Header = (props) => {
   const router = useRouter();
   const handleClick = (href) => {
     router.push(href);
@@ -12,6 +13,7 @@ const Header = () => {
     <Container>
       <Logo onClick={() => handleClick("/")}>OE</Logo>
       <NavContainer>
+        <div>{props.token}</div>
         <NavItem onClick={() => handleClick("./login")}>로그인</NavItem>
         <NavItem>
           <MenuSvg />
@@ -47,4 +49,9 @@ const NavItem = styled.div`
   padding-left: 1rem;
   font-size: 0.8rem;
 `;
+
 export default Header;
+
+export async function getServerSideProps(context) {}
+
+Header.getInitialProps = (ctx) => {};

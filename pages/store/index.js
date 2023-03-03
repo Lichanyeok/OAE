@@ -1,24 +1,14 @@
 import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { use, useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Join = () => {
-  const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
-  const [validation, setValidation] = useState(false);
-
-  const dataPost = async (ob) => {
+const StoreIndex = () => {
+  const postData = async (ob) => {
     console.log(ob);
     try {
       const res = await axios({
         method: "POST",
-        url: `/member/v1.0/join`,
+        url: `/store/v1.0/register`,
         headers: { "Content-Type": "application/json" },
         data: ob,
       });
@@ -26,31 +16,17 @@ const Join = () => {
       console.log(err);
     }
   };
-
   const clickHandler = (e) => {
     e.preventDefault();
     let ob = JSON.stringify({
-      email: email,
-      password: password,
+      name: "푸른목장",
+      category: "한식",
+      contact: "024779277",
+      address: "서울특별시 강동구 성내동 446 17번지 올림픽파크힐 1층 103호",
     });
-    dataPost(ob).then(router.push("/"));
-  };
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
+    postData(ob);
   };
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const rePasswordHandler = (e) => {
-    if (!e.target.value == password) {
-      setValidation(false);
-    } else {
-      setValidation(true);
-    }
-  };
-
   return (
     <>
       <Head>
@@ -60,25 +36,14 @@ const Join = () => {
         />
       </Head>
       <Container>
-        <Text>회원가입</Text>
+        <MainTitle>간단히 당신의 가게를 등록하세요 ! </MainTitle>
         <InputContainer>
-          <Input
-            type="email"
-            placeholder="ex)user@google.com"
-            onChange={emailHandler}
-          />
-          <Input
-            type="password"
-            placeholder="password"
-            onChange={passwordHandler}
-          />
-          <Input
-            type="password"
-            placeholder="re-password"
-            onChange={rePasswordHandler}
-          />
-          <Button onClick={clickHandler}>회원가입</Button>
+          <Input placeholder="카테고리"></Input>
+          <Input placeholder="가게명"></Input>
+          <Input placeholder="가게번호"></Input>
+          <Input placeholder="가게주소" readOnly="true"></Input>
         </InputContainer>
+        <Button onClick={clickHandler}>등록하기</Button>
       </Container>
     </>
   );
@@ -94,9 +59,9 @@ const Container = styled.div`
   font-size: 1rem;
 `;
 
-const Text = styled.p`
-  font-family: NotoSansKR-Bold;
-  font-size: 3rem;
+const MainTitle = styled.p`
+  font-family: NotoSansKR-Regular;
+  font-size: 1.5rem;
 `;
 
 const InputContainer = styled.div`
@@ -119,7 +84,6 @@ const Input = styled.input`
     color: light-gray;
   }
 `;
-
 const Button = styled.button`
   border: 0;
   border-radius: 100px;
@@ -130,5 +94,4 @@ const Button = styled.button`
   font-family: NotoSansKR-Bold;
   color: white;
 `;
-
-export default Join;
+export default StoreIndex;

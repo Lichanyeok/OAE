@@ -1,35 +1,102 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import jwt from "jsonwebtoken";
+import { useState } from "react";
+import axios from "axios";
+import Head from "next/head";
+import { Cookies } from "react-cookie";
 
-const login = () => {
+const Login = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const cookies = new Cookies();
+
+  const postData = async (ob) => {
+    console.log(ob);
+    try {
+      await axios({
+        method: "POST",
+        url: `/member/v1.0/login`,
+        headers: { "Content-Type": "application/json" },
+        data: ob,
+      }).then((response) => {
+        const accessToken = response.data.token;
+        cookies.set("LoginToken", accessToken, {
+          path: "/",
+          secure: true,
+          sameSite: "none",
+        });
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${accessToken}`;
+        router.push("/");
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    let ob = JSON.stringify({
+      email: email,
+      password: password,
+    });
+    postData(ob);
+  };
 
   const handleClick = (href) => {
     router.push(href);
   };
+
+  const emailHandler = (e) => {
+    setEmail(e.target.value);
+  };
+  const passwordHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
   return (
-    <Container>
-      <Text>로그인</Text>
-      <Form>
-        <Input type="email" placeholder="ex)user@google.com" />
-        <Input type="password" placeholder="password" />
-        <Button>로그인</Button>
-      </Form>
-      <SocialContainer>
-        <SocialItem>Git</SocialItem>
-        <SocialItem>Google</SocialItem>
-        <SocialItem>Instagram</SocialItem>
-      </SocialContainer>
-      <UtillContainer>
-        <UtillItem onClick={() => handleClick("./join")}>신규가입</UtillItem>
-        <UtillItem>회원찾기</UtillItem>
-      </UtillContainer>
-    </Container>
+    <>
+      <Head>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+      </Head>
+      <Container>
+        <Text>로그인</Text>
+        <Form>
+          <Input
+            type="email"
+            placeholder="ex)user@google.com"
+            onChange={emailHandler}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            onChange={passwordHandler}
+          />
+          <Button onClick={loginHandler}>로그인</Button>
+        </Form>
+        <SocialContainer>
+          <SocialItem>Git</SocialItem>
+          <SocialItem>Google</SocialItem>
+          <SocialItem>Instagram</SocialItem>
+        </SocialContainer>
+        <UtillContainer>
+          <UtillItem onClick={() => handleClick("./join")}>신규가입</UtillItem>
+          <UtillItem>회원찾기</UtillItem>
+        </UtillContainer>
+      </Container>
+    </>
   );
 };
 
-export default login;
+export default Login;
 
 const Container = styled.div`
   display: flex;
